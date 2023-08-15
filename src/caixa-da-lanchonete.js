@@ -25,9 +25,17 @@ class CaixaDaLanchonete {
     'combo2': { descricao: '1 Café e 1 Sanduíche', valor: 7.50 }}
 ;
     calcularValorDaCompra(metodoDePagamento, itens) {
-        if (itens.length === 0 ){
+        if (itens.length === 0 ){ //se o array de itens está vazio, já considere o pedido como inválido
             return "Não há itens no carrinho de compra!";
         }
+        
+        //testando se a forma de pagamento é válida
+        pagamentosValidos = ['credito', 'debito', 'dinheiro'] //array com as strings das formas válidas de pagamento
+
+        if (!pagamentosValidos.includes(metodoDePagamento)){
+            return "Forma de pagamento inválida!"; //se a forma de pagamento não estiver disponível no array, será inválido
+         }
+        
         return "";
     }
 
