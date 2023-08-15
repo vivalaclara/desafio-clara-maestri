@@ -35,6 +35,12 @@ class CaixaDaLanchonete {
         if (!pagamentosValidos.includes(metodoDePagamento)){
             return "Forma de pagamento inválida!"; //se a forma de pagamento não estiver disponível no array, será inválido 
         }
+        
+         let valor = 0 //inicializar o valor dos respectivos itens VÁLIDOS
+
+         let produtos = [] //inicializar um array para guardar os itens VÁLIDOS de um pedido 
+
+         let valores = [] //inicializar um array para guardar os valores dos itens VÁLIDOS pedidos 
 
         //testando se os itens no pedido são válidos 
         for (const item of itens ){ //selecionar cada item do array de itens fornecido
@@ -46,7 +52,21 @@ class CaixaDaLanchonete {
             if (parseInt(qtd) < 1){ //transformando a string da quantidade em int para verificar se há pelo menos um item
                 return "Quantidade inválida!";
             }
+            valor = this.cardapio[cod].valor * parseInt(qtd); //calculando o valor de cada item 
+            
+            valores.push(valor) //adicionando os valores dos itens 
+
+            produtos.push(cod) //adicionando os itens válidos
         }
+
+        //testando se os itens adicionais estão acompanhados de seus itens iniciais em um pedido
+        if (!produtos.includes('cafe') && produtos.includes('chantily')){
+            return "Item extra não pode ser pedido sem o principal";
+        }
+        if (!produtos.includes('sanduiche') && produtos.includes('queijo')){
+            return "Item extra não pode ser pedido sem o principal";
+        }
+
         return "";
     }
 
