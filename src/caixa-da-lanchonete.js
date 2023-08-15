@@ -1,17 +1,3 @@
-
-//DESCONTOS E TAXAS 
-//Pagamento em dinheiro tem 5% de desconto
-//Pagamento a crédito tem acréscimo de 3% no valor total
-//OUTRAS REGRAS
-//Caso item extra seja informado num pedido que não tenha o respectivo item principal, apresentar mensagem "Item extra não pode ser pedido sem o principal".
-//Combos não são considerados como item principal.
-//É possível pedir mais de um item extra sem precisar de mais de um principal.
-//Se não forem pedidos itens, apresentar mensagem "Não há itens no carrinho de compra!"
-//Se a quantidade de itens for zero, apresentar mensagem "Quantidade inválida!".
-//Se o código do item não existir, apresentar mensagem "Item inválido!"
-//Se a forma de pagamento não existir, apresentar mensagem "Forma de pagamento inválida!"
-
-
 class CaixaDaLanchonete {
  //criando o cardápio da lanchonete 
  cardapio = {
@@ -30,7 +16,7 @@ class CaixaDaLanchonete {
         }
         
         //testando se a forma de pagamento é válida
-        pagamentosValidos = ['credito', 'debito', 'dinheiro'] //array com as strings das formas válidas de pagamento
+       const pagamentosValidos = ['credito', 'debito', 'dinheiro'] //array com as strings das formas válidas de pagamento
 
         if (!pagamentosValidos.includes(metodoDePagamento)){
             return "Forma de pagamento inválida!"; //se a forma de pagamento não estiver disponível no array, será inválido 
@@ -67,7 +53,27 @@ class CaixaDaLanchonete {
             return "Item extra não pode ser pedido sem o principal";
         }
 
-        return "";
+        let valorTotal = 0 // inicializando a variavel p/ calcular o valor total da compra
+        let valorFinal = 0 //inicializando a variavel p/ armazenar o valor final, com acréscimos ou descontos (se houver) 
+
+        
+        for(var i=0;i<valores.length;i++){
+            valorTotal+= valores[i];
+        }
+        
+        //calculando o valor final com descontos e acréscimos (se houver)
+        if (metodoDePagamento === 'dinheiro'){
+            valorFinal = 0.95*valorTotal;
+        }
+        else if (metodoDePagamento === 'credito'){
+            valorFinal = 1.03*valorTotal
+        }
+        else{
+            valorFinal = valorTotal
+        }
+
+        return "R$ " + valorFinal.toFixed(2).replace(".", ",");
+
     }
 
 }
