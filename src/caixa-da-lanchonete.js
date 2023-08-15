@@ -33,9 +33,20 @@ class CaixaDaLanchonete {
         pagamentosValidos = ['credito', 'debito', 'dinheiro'] //array com as strings das formas válidas de pagamento
 
         if (!pagamentosValidos.includes(metodoDePagamento)){
-            return "Forma de pagamento inválida!"; //se a forma de pagamento não estiver disponível no array, será inválido
-         }
-        
+            return "Forma de pagamento inválida!"; //se a forma de pagamento não estiver disponível no array, será inválido 
+        }
+
+        //testando se os itens no pedido são válidos 
+        for (const item of itens ){ //selecionar cada item do array de itens fornecido
+            const [cod,qtd] = item.split(',')
+
+            if (!this.cardapio[cod]){
+                return "Item inválido!";
+            }
+            if (parseInt(qtd) < 1){ //transformando a string da quantidade em int para verificar se há pelo menos um item
+                return "Quantidade inválida!";
+            }
+        }
         return "";
     }
 
